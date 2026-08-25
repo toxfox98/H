@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Riftbound Atlas Mobile</title>
+<meta name="theme-color" content="#111625">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080b12;color:#edf1ff;font:14px Inter,Segoe UI,system-ui,sans-serif}button,input,select{font:inherit}button{background:#202943;color:#fff;border:1px solid #3d4c73;border-radius:7px;padding:8px 11px;cursor:pointer}button:hover:not(:disabled){background:#2e3b5d}button:disabled{opacity:.35;cursor:not-allowed}header{height:68px;background:#111625;border-bottom:1px solid #28324b;padding:0 22px;display:flex;align-items:center;justify-content:space-between}h1{font-size:24px;letter-spacing:4px;margin:0}.prototype{display:block;font-size:9px;letter-spacing:2px;color:#8996b8;margin-top:2px}.header-right{color:#aab5d2}.panel{background:#111725;border:1px solid #28334e;border-radius:11px;padding:12px}.builder-layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:14px;max-width:1700px;margin:auto;padding:14px}.builder-left{min-width:0}.builder-right{min-width:0}.deck-summary{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:center;margin-bottom:10px}.deck-summary div{display:flex;flex-direction:column;gap:4px}.deck-summary span{color:#a9b4cf}.deck-summary .ok{color:#71e3a1}.tabs{display:flex;gap:6px;margin-bottom:10px;overflow:auto}.tabs .active{background:#465987;border-color:#7891d0}.filters{display:flex;gap:8px;margin-bottom:10px;align-items:center}.tab-help{width:100%;padding:8px 10px;background:#17223a;border:1px solid #33466f;border-radius:7px;color:#b9c7e8;font-size:12px;line-height:1.4}.filters input{flex:1;background:#0b0f18;color:#fff;border:1px solid #34415f;border-radius:7px;padding:9px}.filters select{background:#0b0f18;color:#fff;border:1px solid #34415f;border-radius:7px;padding:8px}.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}.card-tile{padding:5px;background:#0b0f18;border-radius:9px;text-align:left;min-width:0}.card-tile img{display:block;width:100%;aspect-ratio:744/1039;object-fit:cover;border-radius:6px}.card-tile.disabled{opacity:.32}.tile-meta{padding:5px 2px;display:flex;justify-content:space-between;gap:5px;font-size:11px}.tile-meta b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tile-meta span{color:#8390ae}.builder-right h2{margin:0 0 10px}.builder-right h3{font-size:13px;margin:16px 0 7px;color:#cbd4eb}.chosen-card .card-tile{width:100%;max-width:150px;margin-bottom:8px}.deck-list{display:flex;flex-direction:column;gap:4px}.deck-list div{display:flex;justify-content:space-between;align-items:center;background:#0c111c;border-radius:5px;padding:6px 8px;font-size:12px}.deck-list button{padding:2px 7px}.validation{margin-top:14px;padding:9px;border-radius:7px;font-size:12px;line-height:1.5}.validation.good{background:#0c2b1c;color:#83e6ad}.validation.bad{background:#32171b;color:#ff9ca6}.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;max-width:1700px;margin:auto;padding:14px}.playerbar{display:flex;gap:18px;align-items:center;margin-bottom:10px}.playerbar span{color:#aab6d1}.playerbar button{margin-left:auto}.board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}.battlefield{min-height:330px;background:radial-gradient(circle,#1b2943,#101622);border:2px solid #34466f;border-radius:13px;padding:11px;cursor:pointer}.battlefield:hover{border-color:#7f9cff}.bf-head{display:flex;justify-content:space-between;color:#c9d3ec}.bf-head span{color:#8390ad;font-size:12px}.units{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.unit{width:92px;background:#090d16;border:1px solid #52638d;border-radius:7px;padding:4px;position:relative}.unit.used{opacity:.45}.unit img{width:100%;aspect-ratio:744/1039;object-fit:cover;border-radius:5px}.unit span{display:block;font-size:10px;padding:4px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.unit b{position:absolute;right:7px;bottom:23px;background:#9a6d30;border-radius:50%;padding:3px 6px}.hand{display:flex;gap:8px;overflow:auto;min-height:170px}.hand-card{width:105px;flex:0 0 auto;background:#0a0e17;padding:4px;text-align:left}.hand-card.playable{border-color:#8ca5ff}.hand-card img{width:100%;aspect-ratio:744/1039;object-fit:cover;border-radius:5px}.hand-card span{font-size:10px;display:block;padding:4px 1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.sidebar{display:flex;flex-direction:column;gap:10px}.sidebar h2{font-size:15px;margin:0 0 8px}.log div{padding:6px 0;border-bottom:1px solid #20283a;font-size:12px;color:#aeb8d0}.guide p{color:#aeb8d0;line-height:1.5}@media(max-width:1100px){.builder-layout,.game-layout{grid-template-columns:1fr}.board{grid-template-columns:1fr}.sidebar{grid-column:1}.deck-summary{grid-template-columns:repeat(3,1fr)}}
+
+.header-nav{display:flex;gap:6px;align-items:center;margin-left:auto;margin-right:16px}.header-nav button{padding:6px 9px;font-size:12px}
+.card-wrap{position:relative;min-width:0}.card-wrap .card-tile{width:100%}.detail-btn{position:absolute;right:6px;top:6px;border-radius:50%;width:28px;height:28px;padding:0;background:#101625cc;backdrop-filter:blur(4px);z-index:2}.result-count,.catalog-count{color:#8996b8;font-size:12px;align-self:center}.deck-stats{display:flex;gap:10px;flex-wrap:wrap;padding:9px 0;border-top:1px solid #28334e;margin-top:10px;color:#aeb8d0;font-size:12px}.deck-stats b{color:#fff;margin-right:auto}.toggle{display:flex;align-items:center;gap:5px;color:#aeb8d0;font-size:12px}.catalog{max-width:1700px;margin:auto;padding:14px}.catalog .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}.catalog .filters input{flex:1;min-width:240px}.gallery-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.modal-backdrop{position:fixed;inset:0;background:#000b;display:grid;place-items:center;z-index:20;padding:24px}.card-modal{position:relative;display:grid;grid-template-columns:minmax(220px,340px) minmax(260px,500px);gap:22px;background:#111725;border:1px solid #44557f;border-radius:14px;padding:18px;max-width:900px;max-height:90vh;overflow:auto;box-shadow:0 20px 80px #000}.card-modal>img{width:100%;border-radius:10px}.card-modal h2{margin-top:0;font-size:25px}.card-modal p{color:#b7c1d9;line-height:1.55}.card-modal .rules{white-space:pre-wrap}.modal-close{position:absolute;right:10px;top:10px;border-radius:50%;width:34px;height:34px;padding:0;font-size:20px;z-index:2}.badge{display:inline-block;padding:4px 7px;border-radius:5px;background:#33466e;margin-right:6px;font-size:11px}.badge.banned{background:#6b2835}
+@media(max-width:900px){.header-nav{order:3;width:100%;justify-content:center;margin:4px 0 8px}header{height:auto;min-height:68px;flex-wrap:wrap;padding:10px 14px}.card-modal{grid-template-columns:1fr;max-width:480px}.card-modal>img{max-width:300px;margin:auto}.catalog .filters input{min-width:160px}}
+/* Atlas-style simulator board */
+.sim-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:12px;max-width:1800px;margin:auto;padding:12px}.sim-main{min-width:0}.sim-sidebar{display:flex;flex-direction:column;gap:10px}.playerbar{flex-wrap:wrap;min-height:54px}.player-title{display:flex;flex-direction:column;min-width:130px}.player-title small{color:#7e8baa}.opponent-zones,.zone-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0}.zone{min-height:82px;background:#0b101a;border:1px dashed #3a4869;border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:5px}.zone b{font-size:11px;letter-spacing:1px}.zone>span{color:#8592ad;font-size:12px}.zone button{font-size:11px;padding:5px}.zone.compact{min-height:52px}.zone-cards,.rune-cards{display:flex;gap:5px;overflow:auto}.zone-card{width:52px;flex:0 0 52px;padding:2px;background:#101727}.zone-card img{width:100%;aspect-ratio:744/1039;object-fit:cover;border-radius:4px}.zone-card span{display:block;font-size:8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.board{position:relative}.battlefield{transition:.15s;border-style:solid}.board.placement .battlefield{border-color:#8ba7ff;box-shadow:0 0 0 1px #536da9 inset,0 0 18px #253d73}.bf-head small{display:block;color:#7887a7;font-size:10px;margin-top:3px}.bf-head>span{font-size:9px;color:#6f80a6}.unit{cursor:grab}.unit:active,.hand-card:active{cursor:grabbing}.unit.exhausted{opacity:.5;transform:rotate(3deg)}.unit.empowered{box-shadow:0 0 0 2px #e5ba5c inset}.hand-card{position:relative}.hand-card small{display:block;color:#7f8eab;font-size:9px;padding:2px}.sim-controls{margin-top:8px}.sim-controls>div:first-child{padding-bottom:8px;color:#aeb9d1}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button{font-size:11px}.chain{min-height:90px}.chain div{padding:7px;background:#0b101a;border-radius:6px;margin:4px 0}.empty-zone{color:#5f6d89;font-size:11px;align-self:center;padding:8px}.peek-overlay,.modal-backdrop{position:fixed;inset:0;background:rgba(3,6,12,.78);display:grid;place-items:center;z-index:50;padding:20px}.peek-card,.card-modal{position:relative;background:#111827;border:1px solid #44557c;border-radius:14px;padding:18px;max-width:620px;box-shadow:0 20px 70px rgba(0,0,0,.5)}.peek-card img{width:230px;max-height:430px;object-fit:contain;display:block;margin:auto;border-radius:9px}.peek-card button,.modal-close{position:absolute;right:10px;top:8px}.win-banner{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#182c25;border:1px solid #65d99b;padding:14px 22px;border-radius:12px;z-index:60;font-weight:700}.card-modal img{width:240px;max-height:520px;object-fit:contain;border-radius:8px;float:left;margin-right:18px}.card-modal{overflow:auto}.rules{white-space:pre-wrap;line-height:1.5;color:#b7c3dc}.badge{display:inline-block;padding:4px 7px;border-radius:5px;background:#344c85;margin-right:5px;font-size:11px}.badge.banned{background:#73323c}.header-nav{display:flex;gap:6px;align-items:center}.header-nav button{font-size:11px}@media(max-width:1100px){.sim-layout{grid-template-columns:1fr}.opponent-zones,.zone-row{grid-template-columns:repeat(2,1fr)}.sim-sidebar{grid-row:2}.card-modal img{float:none;display:block;margin:0 auto 12px}}
+
+/* Mobile / Capacitor layer */
+html,body,#app{min-height:100%;width:100%;overscroll-behavior:none}
+body{padding-bottom:env(safe-area-inset-bottom);-webkit-tap-highlight-color:transparent}
+button,input,select{touch-action:manipulation}
+img{user-select:none;-webkit-user-drag:none}
+@media (max-width: 700px){
+  header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);padding:8px 10px;gap:8px}
+  header h1{font-size:18px;letter-spacing:2px}
+  .prototype{font-size:7px}
+  .header-right{font-size:10px}
+  .header-nav{overflow-x:auto;max-width:100%;order:3;width:100%;justify-content:flex-start;margin:0;padding-bottom:2px}
+  .header-nav button{min-height:38px;white-space:nowrap}
+  .builder-layout,.catalog,.sim-layout{padding:8px;gap:8px}
+  .deck-summary{grid-template-columns:repeat(2,1fr);gap:6px;padding:9px}
+  .deck-summary button{min-height:42px}
+  .tabs{position:sticky;top:63px;z-index:30;padding:5px;overflow-x:auto}
+  .tabs button{min-width:max-content;min-height:40px}
+  .filters{position:sticky;top:110px;z-index:29;padding:7px;box-shadow:0 6px 18px #0008}
+  .filters input{min-width:0;width:100%;flex-basis:100%;font-size:16px}
+  .filters select{min-height:40px;max-width:48%}
+  .card-grid,.gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .card-tile{padding:3px;border-radius:7px}
+  .tile-meta{font-size:9px;padding:3px 1px}
+  .detail-btn{width:30px;height:30px;right:4px;top:4px}
+  .builder-right{order:2}
+  .builder-right .panel{padding:9px}
+  .deck-list div{min-height:38px}
+  .game-layout,.sim-layout{grid-template-columns:1fr}
+  .sim-sidebar{order:2}
+  .sim-main{order:1}
+  .opponent-zones,.zone-row{grid-template-columns:repeat(2,1fr);gap:6px}
+  .zone{min-height:76px;padding:7px}
+  .zone button{min-height:36px}
+  .board{gap:6px}
+  .battlefield{min-height:240px;padding:7px}
+  .unit{width:74px}
+  .hand{min-height:128px;padding:7px;scroll-snap-type:x proximity}
+  .hand-card{width:88px;scroll-snap-align:start}
+  .hand-card img{border-radius:4px}
+  .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .actions button{min-height:40px}
+  .sim-controls{position:sticky;bottom:0;z-index:35;box-shadow:0 -8px 24px #0008}
+  .sim-controls .actions button:last-child{grid-column:1/-1}
+  .playerbar{gap:8px;padding:8px;font-size:10px}
+  .player-title{min-width:90px}
+  .rune-strip{overflow-x:auto}
+  .card-modal{width:min(96vw,480px);max-height:92vh;padding:12px}
+  .card-modal img{width:min(60vw,250px);max-height:50vh}
+  .peek-card{width:min(94vw,380px);max-height:90vh;overflow:auto}
+  .peek-card img{width:180px;max-height:330px}
+  .win-banner{bottom:calc(12px + env(safe-area-inset-bottom));width:90%;text-align:center}
+}
+@media (max-width:430px){
+  .card-grid,.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .battlefield{min-height:210px}
+  .unit{width:68px}
+  .deck-summary{grid-template-columns:1fr 1fr}
+}
+
+/* Mobile Atlas table controls */
+.mobile-action-bar{display:none}
+@media(max-width:700px){
+  body{background:#05070c}
+  .sim-main{padding-bottom:76px}
+  .sim-layout{padding:4px}
+  .sim-main>.playerbar:first-child{position:sticky;top:64px;z-index:28;margin-bottom:5px;background:rgba(17,23,37,.94);backdrop-filter:blur(10px)}
+  .opponent-zones{grid-template-columns:repeat(4,1fr);overflow:hidden}
+  .opponent-zones .zone{min-height:50px;padding:5px;text-align:center;align-items:center}
+  .opponent-zones .zone b{font-size:8px}
+  .opponent-zones .zone span{font-size:10px}
+  .board{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;overflow-x:auto;padding:2px}
+  .battlefield{min-width:29vw;min-height:250px;border-radius:9px;padding:5px}
+  .bf-head{font-size:9px;gap:4px}.bf-head small{font-size:8px}.bf-head>span{display:none}
+  .units{gap:4px;margin-top:9px;justify-content:center}
+  .unit{width:62px;padding:2px;border-radius:5px}.unit span{font-size:8px}.unit b{right:4px;bottom:19px;font-size:9px;padding:2px 4px}
+  .zone-row{grid-template-columns:repeat(4,1fr);overflow-x:auto}.zone-row .zone{min-width:118px}
+  .rune-strip{padding:7px;overflow:hidden}.rune-cards{max-width:100%;overflow-x:auto}
+  .sim-main>.playerbar:nth-of-type(2){margin-top:6px}
+  .hand{min-height:148px;margin:5px 0;border-radius:9px;align-items:flex-end;padding:5px 7px}
+  .hand-card{width:86px;transform-origin:bottom center}.hand-card img{aspect-ratio:744/1039}
+  .sim-controls{display:none}
+  .sim-sidebar{display:none}
+  .mobile-action-bar{display:grid;position:fixed;left:0;right:0;bottom:0;z-index:100;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:rgba(8,11,18,.96);border-top:1px solid #354362;box-shadow:0 -10px 30px #000b;backdrop-filter:blur(14px)}
+  .mobile-action-bar button{min-height:46px;border-radius:8px;font-size:11px}.mobile-action-bar button.active{background:#465987;border-color:#7891d0}.mobile-action-bar .mobile-primary{background:#263657}
+  .mobile-action-bar .mobile-primary:nth-last-child(1):nth-child(4){grid-column:auto}
+  .mobile-action-sheet{position:fixed;left:8px;right:8px;bottom:64px;z-index:99}
+  .mobile-action-bar button:active{transform:scale(.98)}
+  .header-right{max-width:45%;text-align:right}
+}
+
+/* Mobile Atlas table controls */
+.mobile-action-bar{display:none}
+@media(max-width:700px){
+  body{background:#05070c}
+  .sim-main{padding-bottom:76px}
+  .sim-main>.playerbar:first-child{position:sticky;top:64px;z-index:28;margin-bottom:5px;background:rgba(17,23,37,.94);backdrop-filter:blur(10px)}
+  .opponent-zones{grid-template-columns:repeat(4,1fr);overflow:hidden}
+  .opponent-zones .zone{min-height:50px;padding:5px;text-align:center;align-items:center}
+  .opponent-zones .zone b{font-size:8px}.opponent-zones .zone span{font-size:10px}
+  .board{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;overflow-x:auto;padding:2px}
+  .battlefield{min-width:29vw;min-height:250px;border-radius:9px;padding:5px}
+  .bf-head{font-size:9px;gap:4px}.bf-head small{font-size:8px}.bf-head>span{display:none}
+  .units{gap:4px;margin-top:9px;justify-content:center}
+  .unit{width:62px;padding:2px;border-radius:5px}.unit span{font-size:8px}.unit b{right:4px;bottom:19px;font-size:9px;padding:2px 4px}
+  .zone-row{grid-template-columns:repeat(4,1fr);overflow-x:auto}.zone-row .zone{min-width:118px}
+  .rune-strip{padding:7px;overflow:hidden}.rune-cards{max-width:100%;overflow-x:auto}
+  .hand{min-height:148px;margin:5px 0;border-radius:9px;align-items:flex-end;padding:5px 7px}
+  .hand-card{width:86px;transform-origin:bottom center}
+  .sim-controls,.sim-sidebar{display:none}
+  .mobile-action-bar{display:grid;position:fixed;left:0;right:0;bottom:0;z-index:100;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:rgba(8,11,18,.96);border-top:1px solid #354362;box-shadow:0 -10px 30px #000b;backdrop-filter:blur(14px)}
+  .mobile-action-bar button{min-height:46px;border-radius:8px;font-size:11px}.mobile-action-bar button.active{background:#465987;border-color:#7891d0}.mobile-action-bar .mobile-primary{background:#263657}
+  .header-right{max-width:45%;text-align:right}
+}
+.mobile-drawer{display:none}
+@media(max-width:700px){
+ .mobile-drawer{display:block;position:fixed;left:8px;right:8px;bottom:66px;z-index:98;background:rgba(13,18,29,.98);border:1px solid #3c4d70;border-radius:12px;padding:10px;box-shadow:0 12px 40px #000c;max-height:42vh;overflow:auto}
+ .drawer-title{font-size:12px;font-weight:700;color:#cbd5ee;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
+ .mobile-zone-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.mobile-zone-summary span{background:#0a0f19;border:1px solid #283754;border-radius:7px;padding:9px 5px;text-align:center;font-size:9px;color:#8f9db8}.mobile-zone-summary b{display:block;color:#fff;font-size:16px;margin-top:2px}
+ .mobile-log div{font-size:10px;color:#aeb9d0;padding:7px 4px;border-bottom:1px solid #232d42}
+ .mobile-drawer .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.mobile-drawer .actions button{min-height:40px}
+}
+
+/* Contextual touch actions */
+.context-banner{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;margin:0 4px 5px;border:1px solid #344563;background:#101829;border-radius:8px;color:#9eacc7;font-size:11px}.context-banner b{color:#fff}.context-banner button,.clear-selection{border:1px solid #42557c;background:#1b2740;color:#dbe5ff;border-radius:6px;padding:6px 9px}.context-selected{outline:2px solid #8aa7ff!important;outline-offset:1px}.empty-action{grid-column:1/-1;color:#8998b5;padding:10px;text-align:center}.drawer-divider{height:1px;background:#283650;margin:10px 0}.drawer-title.secondary{color:#7888a5;font-size:10px}.clear-selection{margin-bottom:8px;width:100%}
+@media(max-width:700px){.context-banner{font-size:10px;margin:0 4px 4px;min-height:34px}.context-banner span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mobile-drawer{max-height:55vh}.mobile-drawer .actions button{min-height:44px;text-align:left}.mobile-action-bar{grid-template-columns:repeat(3,1fr)} }
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script type="module">
+
+/* ===== src/data.js ===== */
+const bannedNames = new Set([
+  "Called Shot",
+  "Draven, Vanquisher",
+  "Fight or Flight",
+  "Scrapheap",
+  "Stealthy Pursuer"
+]);
+
+// Constructed-banned Battlefields. Battlefields are colorless and may be
+// included in any deck; they are restricted by name, not Domain Identity.
+const bannedBattlefieldNames = new Set([
+  "Dreaming Tree",
+  "Obelisk of Power",
+  "Reaver's Row",
+  "Reaver’s Row"
+]);
+
+const BANNED_NAMES = bannedNames;
+const BANNED_BATTLEFIELD_NAMES = bannedBattlefieldNames;
+const SETS = ["OGS","OGN","SFD","UNL","VEN"];
+
+function normalizeCard(raw){
+  const domains = raw.domains ?? (raw.domain ? [raw.domain] : []);
+  const type = raw.cardType ?? raw.type ?? "";
+  const labels = raw.cardTypeLabels ?? [];
+  const tags = raw.tags ?? [];
+  const name = raw.fullName ?? raw.name ?? "Unknown";
+  const code = raw.cardCode ?? raw.id ?? crypto.randomUUID();
+  const energy = raw.energy ?? raw.cost ?? null;
+  const might = raw.might ?? null;
+  const power = raw.power ?? null;
+  const ability = raw.abilityEffective ?? raw.abilityCorrected ?? raw.abilityOriginal ?? raw.ability_html ?? raw.text ?? "";
+  const setCode = (raw.setCode ?? raw.set ?? "").toString().toUpperCase();
+  const isLegend = type.toLowerCase() === "legend" || labels.includes("Legend");
+  const isBattlefield = type.toLowerCase() === "battlefield";
+  const isRune = type.toLowerCase() === "rune";
+  const isChampion = labels.includes("Champion") || tags.includes("Champion") || tags.length > 0 && labels.includes("Unit") && /champion/i.test(ability);
+  const isSignature = labels.includes("Signature") || /signature/i.test(type) || /signature/i.test(ability);
+  return {
+    id:code,name,fullName:raw.fullName ?? name,code,setCode,setName:raw.cardSet ?? raw.set_name ?? setCode,
+    type,labels,tags,domains,energy,might,power,ability,
+    imageUrl:raw.imageUrl ?? raw.image_url ?? "",
+    artist:raw.artist ?? (raw.artists||[]).join(", "),
+    rarity:raw.rarity ?? "",
+    isLegend,isBattlefield,isRune,isChampion,isSignature
+  };
+}
+
+function matchesDomains(card, identity){
+  if(!identity?.length) return true;
+  if(!card.domains?.length) return true;
+  return card.domains.every(d => identity.includes(d));
+}
+
+function cardIsBanned(card){ return bannedNames.has(card.name); }
+function battlefieldIsBanned(card){ return bannedBattlefieldNames.has(card.name); }
+
+function cardSearchText(card){
+  return [card.name,card.setName,card.setCode,card.type,card.domains.join(" "),card.tags.join(" "),card.ability].join(" ").toLowerCase();
+}
+
+
+/* ===== src/deck.js ===== */
+
+const MAIN_SIZE=40;
+const RUNE_SIZE=12;
+const MAX_COPIES=3;
+const SIGNATURE_LIMIT=3;
+const BATTLEFIELD_COUNT=3;
+
+function emptyDeck(){
+  return {legend:null,chosenChampion:null,main:[],runes:[],battlefields:[]};
+}
+function countName(list, card){return list.filter(x=>x.name===card.name).length;}
+function countSignatures(list){return list.filter(x=>x.isSignature).length;}
+
+function domainIdentity(deck, cardsById){
+  const legend=deck.legend && cardsById.get(deck.legend);
+  return legend?.domains ?? [];
+}
+
+function cardAllowedInMain(card, deck, cardsById){
+  if(!card || card.isLegend || card.isRune || card.isBattlefield) return false;
+  if(cardIsBanned(card)) return false;
+  const identity=domainIdentity(deck,cardsById);
+  if(!matchesDomains(card,identity)) return false;
+  if(countName(deck.main,card)>=MAX_COPIES) return false;
+  if(card.isSignature && countSignatures(deck.main)>=SIGNATURE_LIMIT) return false;
+  if(card.isSignature){
+    const legend=deck.legend && cardsById.get(deck.legend);
+    if(legend?.tags?.length && !legend.tags.some(t=>card.tags.includes(t))) return false;
+  }
+  return true;
+}
+
+function cardAllowedAsChampion(card, deck, cardsById){
+  if(!card || !card.isChampion || card.isSignature || cardIsBanned(card)) return false;
+  const legend=deck.legend && cardsById.get(deck.legend);
+  if(!legend) return false;
+  return legend.tags?.some(tag=>card.tags.includes(tag)) ?? false;
+}
+
+function cardAllowedAsRune(card,deck,cardsById){
+  if(!card?.isRune) return false;
+  return matchesDomains(card,domainIdentity(deck,cardsById));
+}
+
+function cardAllowedAsBattlefield(card,deck,cardsById){
+  if(!card?.isBattlefield) return false;
+  // Battlefields are colorless and can be used with any Champion Legend.
+  // Only uniqueness and Constructed bans matter here.
+  if(battlefieldIsBanned(card)) return false;
+  if(deck.battlefields.some(id=>id===card.id)) return false;
+  return true;
+}
+
+function validateDeck(deck,cardsById){
+  const errors=[];
+  if(!deck.legend) errors.push("Choose a Champion Legend.");
+  if(!deck.chosenChampion) errors.push("Choose a Chosen Champion.");
+  if(deck.main.length!==MAIN_SIZE) errors.push(`Main Deck must contain exactly ${MAIN_SIZE} cards.`);
+  if(deck.runes.length!==RUNE_SIZE) errors.push(`Rune Deck must contain exactly ${RUNE_SIZE} cards.`);
+  if(deck.battlefields.length!==BATTLEFIELD_COUNT) errors.push(`Choose exactly ${BATTLEFIELD_COUNT} battlefields.`);
+
+  const counts=new Map();
+  for(const c of deck.main){
+    counts.set(c.name,(counts.get(c.name)||0)+1);
+    if(counts.get(c.name)>MAX_COPIES) errors.push(`Too many copies of ${c.name}.`);
+    if(cardIsBanned(c)) errors.push(`${c.name} is banned in Constructed.`);
+    if(!matchesDomains(c,domainIdentity(deck,cardsById))) errors.push(`${c.name} is outside your Legend's Domain Identity.`);
+  }
+  if(countSignatures(deck.main)>SIGNATURE_LIMIT) errors.push("A deck may contain at most 3 Signature cards.");
+  const legend=deck.legend && cardsById.get(deck.legend);
+  const champ=deck.chosenChampion && cardsById.get(deck.chosenChampion);
+  if(legend && champ && !(legend.tags||[]).some(t=>(champ.tags||[]).includes(t)))
+    errors.push("Chosen Champion must have a Champion tag matching the Legend.");
+  for(const c of deck.runes){
+    if(!cardAllowedAsRune(c,deck,cardsById)) errors.push(`${c.name} is not legal for this Rune Deck.`);
+  }
+  if(new Set(deck.battlefields).size!==deck.battlefields.length) errors.push("Battlefields must have unique names.");
+  for(const id of deck.battlefields){ const bf=cardsById.get(id); if(bf && battlefieldIsBanned(bf)) errors.push(`${bf.name} is banned in Constructed.`); }
+  return [...new Set(errors)];
+}
+
+
+/* ===== src/main-cards.js ===== */
+let CARDS = {};
+function setCards(map){ CARDS = map; }
+
+
+/* ===== src/engine.js ===== */
+
+const clone = x => structuredClone(x);
+const uid = () => Math.random().toString(36).slice(2, 11);
+const shuffled = a => { const x=[...a]; for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];} return x; };
+const opp = id => id === "p1" ? "p2" : "p1";
+
+function makeCard(cardId, owner){ return { uid:uid(), cardId, owner, exhausted:false, empowered:false, damage:0, label:"" }; }
+function makePlayer(id,name,deck){
+  return {id,name,energy:1,maxEnergy:1,points:0,hand:[],deck:shuffled(deck.main.map(c=>makeCard(c.id,id))),trash:[],banished:[],runeDeck:shuffled(deck.runes.map(c=>makeCard(c.id,id))),runeZone:[],legend:deck.legend,chosenChampion:deck.chosenChampion};
+}
+function draw(p,n=1){ let count=0; while(n-- && p.deck.length){p.hand.push(p.deck.shift());count++;} return count; }
+function snapshot(g){ return clone(g); }
+
+function useCardDatabase(map){ setCards(map); }
+function createGame(deck1, deck2, options={}){
+  const players=[makePlayer("p1",options.p1Name||"Player 1",deck1),makePlayer("p2",options.p2Name||"Player 2",deck2)];
+  players.forEach(p=>draw(p,4));
+  return {
+    mode:"riftbound", practice:!!options.practice, turn:1, round:1, activePlayer:"p1", phase:"START", priority:"p1",
+    players, battlefields:deck1.battlefields.map((id,i)=>({id:`bf${i+1}`,cardId:id,units:[]})),
+    chain:[], selected:null, pending:null, winner:null, log:["Game started. Player 1 has priority."], history:[], future:[], actionSeq:0
+  };
+}
+function publicState(g){return clone(g);}
+
+function player(g,id){return g.players.find(p=>p.id===id);}
+function unitAt(g,id){for(const bf of g.battlefields){const u=bf.units.find(x=>x.uid===id);if(u)return {bf,u};}return null;}
+function card(id){return CARDS[id] || {};
+}
+function record(g,msg){g.log.unshift(msg);g.log=g.log.slice(0,60);g.actionSeq++;}
+function saveHistory(g){ const old=g.history||[]; const base=clone(g); base.history=[];base.future=[]; old.push(base);g.history=old.slice(-30);g.future=[]; }
+function commit(g,msg){ if(msg)record(g,msg); return g; }
+function resetUsed(g,pid){g.battlefields.forEach(b=>b.units.forEach(u=>{if(u.owner===pid)u.exhausted=false;}));}
+
+function perform(game,a){
+  const g=clone(game); const pid=a.owner || g.activePlayer; const p=player(g,pid); if(!p)throw Error("Player not found.");
+  if(a.type!=="UNDO" && a.type!=="REDO") saveHistory(g);
+  switch(a.type){
+    case "DRAW": draw(p,1); return commit(g,`${p.name} drew a card.`);
+    case "LOOK_DECK": g.selected={type:"DECK_PEEK",playerId:pid}; return g;
+    case "BURN_TOP": { if(!p.deck.length) return g; const c=p.deck.shift();p.trash.push(c);return commit(g,`${p.name} burned the top card to trash.`); }
+    case "PLAY": {
+      const i=p.hand.findIndex(c=>c.uid===a.cardUid); if(i<0)throw Error("Card is not in hand.");
+      const inst=p.hand[i], c=card(inst.cardId), cost=Number(c.energy??c.cost??0); if(cost>p.energy)throw Error("Not enough Energy.");
+      p.energy-=cost;p.hand.splice(i,1);g.pending={playerId:pid,card:inst};g.selected={type:"PLACEMENT",cardUid:inst.uid};return commit(g,`${p.name} played ${c.name}; choose a battlefield.`);
+    }
+    case "PLACE": {
+      if(!g.pending||g.pending.playerId!==pid)throw Error("No card awaiting placement.");
+      const bf=g.battlefields.find(x=>x.id===a.bfId);if(!bf)throw Error("Invalid battlefield.");
+      const inst=g.pending.card;bf.units.push({...inst});g.pending=null;g.selected=null;return commit(g,`${p.name} deployed ${card(inst.cardId).name} to ${card(bf.cardId).name}.`);
+    }
+    case "MOVE": {
+      const hit=unitAt(g,a.unitUid),dest=g.battlefields.find(b=>b.id===a.to);if(!hit||!dest)throw Error("Invalid move.");
+      if(hit.u.owner!==pid)throw Error("You can only move your own unit in practice mode.");hit.bf.units=hit.bf.units.filter(u=>u.uid!==a.unitUid);hit.u.exhausted=true;dest.units.push(hit.u);return commit(g,`${p.name} moved ${card(hit.u.cardId).name}.`);
+    }
+    case "EXHAUST": {const hit=unitAt(g,a.unitUid);if(!hit)throw Error("Unit not found.");if(hit.u.owner!==pid && !g.practice)throw Error("Not your unit.");hit.u.exhausted=!hit.u.exhausted;return commit(g,`${card(hit.u.cardId).name} ${hit.u.exhausted?"exhausted":"readied"}.`);}
+    case "TRASH": return moveUnit(g,a, "trash", pid);
+    case "BANISH": return moveUnit(g,a, "banished", pid);
+    case "RECYCLE": return recycle(g,a,pid);
+    case "CAPTURE": {const hit=unitAt(g,a.unitUid);if(!hit)throw Error("Unit not found.");hit.u.captured=true;return commit(g,`${card(hit.u.cardId).name} was captured.`);}
+    case "ATTACK": {
+      const hit=unitAt(g,a.unitUid);if(!hit)throw Error("Unit not found.");if(hit.u.owner!==pid&&!g.practice)throw Error("Not your unit.");
+      hit.u.exhausted=true;g.selected={type:"ATTACK",unitUid:a.unitUid,bfId:hit.bf.id};
+      const target=hit.bf.units.find(u=>u.owner!==hit.u.owner&&!u.captured); if(target) g.selected.targetUid=target.uid;
+      return commit(g,`${card(hit.u.cardId).name} attacked at ${card(hit.bf.cardId).name}.`);
+    }
+    case "CONQUER": {const hit=unitAt(g,a.unitUid);if(!hit)throw Error("Unit not found.");if(hit.u.owner!==pid&&!g.practice)throw Error("Not your unit.");p.points++;hit.u.exhausted=true;record(g,`${p.name} scored at ${card(hit.bf.cardId).name}.`);checkWinner(g);return g;}
+    case "EMPOWER": {const hit=unitAt(g,a.unitUid);if(!hit)throw Error("Unit not found.");if(hit.u.owner!==pid&&!g.practice)throw Error("Not your unit.");const cost=Number(a.cost||1);if(p.energy<cost)throw Error("Not enough Energy.");p.energy-=cost;hit.u.empowered=true;return commit(g,`${card(hit.u.cardId).name} was Empowered.`);}
+    case "REVEAL_RUNE": {if(!p.runeDeck.length)throw Error("Rune Deck is empty.");const r=p.runeDeck.shift();p.runeZone.push(r);return commit(g,`${p.name} revealed a Rune.`);}
+    case "LOOK_RUNE": {g.selected={type:"RUNE_PEEK",playerId:pid,cardId:p.runeDeck[0]?.cardId||null};return g;}
+    case "BOTTOM_RUNE": {if(!p.runeDeck.length)return g;p.runeDeck.push(p.runeDeck.shift());return commit(g,`${p.name} put the top Rune on the bottom.`);}
+    case "END_ACTION": {g.priority=opp(g.priority);if(g.priority===g.activePlayer){g.phase="END";return advanceTurn(g);}g.phase="ACTION";return g;}
+    case "PASS_PRIORITY": {g.priority=opp(g.priority);if(g.priority===g.activePlayer){g.phase="END";return advanceTurn(g);}return g;}
+    case "END_TURN": return advanceTurn(g);
+    case "UNDO": return undo(game);
+    case "REDO": return redo(game);
+    default: return g;
+  }
+}
+function moveUnit(g,a,zone,pid){const hit=unitAt(g,a.unitUid);if(!hit)throw Error("Unit not found.");if(hit.u.owner!==pid&&!g.practice)throw Error("Not your unit.");hit.bf.units=hit.bf.units.filter(u=>u.uid!==a.unitUid);player(g,hit.u.owner)[zone].push(hit.u);return commit(g,`${card(hit.u.cardId).name} moved to ${zone}.`);}
+function recycle(g,a,pid){const hit=unitAt(g,a.unitUid);if(!hit)throw Error("Unit not found.");if(hit.u.owner!==pid&&!g.practice)throw Error("Not your unit.");hit.bf.units=hit.bf.units.filter(u=>u.uid!==a.unitUid);player(g,hit.u.owner).deck.push(hit.u);return commit(g,`${card(hit.u.cardId).name} recycled into the deck.`);}
+function advanceTurn(g){
+  g.activePlayer=opp(g.activePlayer);g.priority=g.activePlayer;g.turn++;g.round=Math.ceil(g.turn/2);g.phase="START";
+  const p=player(g,g.activePlayer);p.maxEnergy=Math.min(10,Math.max(1,p.maxEnergy+1));p.energy=p.maxEnergy;resetUsed(g,p.id);draw(p,1);g.phase="ACTION";g.selected=null;record(g,`${p.name}'s turn begins. Draw 1 and refresh.`);return g;
+}
+function checkWinner(g){const w=g.players.find(p=>p.points>=8);if(w){g.winner=w.id;g.phase="GAME_OVER";record(g,`${w.name} wins the game!`);}}
+function legalActions(g,pid="p1"){
+  if(g.winner)return [];
+  const p=player(g,pid),out=[];
+  if(g.pending?.playerId===pid) return g.battlefields.map(b=>({type:"PLACE",bfId:b.id,label:`Deploy to ${card(b.cardId).name}`}));
+  out.push({type:"DRAW",label:"Draw"},{type:"LOOK_DECK",label:"Look Top"},{type:"BURN_TOP",label:"Burn Top"},{type:"REVEAL_RUNE",label:"Reveal Rune"},{type:"LOOK_RUNE",label:"Look Rune"},{type:"BOTTOM_RUNE",label:"Rune → Bottom"});
+  for(const c of p.hand){const cd=card(c.cardId);if(Number(cd.energy??cd.cost??0)<=p.energy)out.push({type:"PLAY",cardUid:c.uid,label:`Play ${cd.name}`});}
+  for(const b of g.battlefields)for(const u of b.units.filter(u=>u.owner===pid)){out.push({type:"EXHAUST",unitUid:u.uid,label:u.exhausted?`Ready ${card(u.cardId).name}`:`Exhaust ${card(u.cardId).name}`});if(!u.exhausted){out.push({type:"ATTACK",unitUid:u.uid,label:`Attack with ${card(u.cardId).name}`},{type:"CONQUER",unitUid:u.uid,label:`Score ${card(b.cardId).name}`},{type:"MOVE",unitUid:u.uid,to:g.battlefields.find(x=>x.id!==b.id)?.id,label:`Move ${card(u.cardId).name}`},{type:"EMPOWER",unitUid:u.uid,cost:1,label:`Empower ${card(u.cardId).name}`});}out.push({type:"TRASH",unitUid:u.uid,label:`Trash ${card(u.cardId).name}`},{type:"BANISH",unitUid:u.uid,label:`Banish ${card(u.cardId).name}`},{type:"RECYCLE",unitUid:u.uid,label:`Recycle ${card(u.cardId).name}`});}
+  out.push({type:"END_ACTION",label:"Pass Priority"},{type:"END_TURN",label:"End Turn"});return out;
+}
+function undo(game){if(!game.history?.length)return game;const history=game.history.slice(0,-1),previous=clone(game.history.at(-1));previous.history=history;previous.future=[...(game.future||[]),clone(game)];return previous;}
+function redo(game){if(!game.future?.length)return game;const next=clone(game.future.at(-1));const future=game.future.slice(0,-1);next.history=[...(game.history||[]),clone(game)];next.future=future;return next;}
+function placeUnit(g,bfId){return perform(g,{type:"PLACE",bfId,owner:g.pending?.playerId||g.activePlayer});}
+
+
+/* ===== src/main.js ===== */
+
+
+
+
+
+let allCards=[], cards=[], cardsById=new Map(), deck=emptyDeck(), screen="builder", game=null, activeTab="main", search="", filterType="All", filterSet="All", filterDomain="All";
+let sortBy="name", showBanned=true, cardModal=null, mobilePanel="actions", contextTarget=null, savedDecks=JSON.parse(localStorage.getItem("riftbound-decks-v3")||"[]");
+
+async function loadCards(){
+  const sources=["./data/cards.json","https://github.com/LouisCourrian/riftbound-cards/releases/latest/download/cards.json"];
+  for(const url of sources){
+    try{
+      const res=await fetch(url,{cache:"no-store"});
+      if(!res.ok) throw new Error(`card data ${res.status}`);
+      const raw=await res.json();
+      if(!Array.isArray(raw)) throw new Error("card data is not an array");
+      allCards=raw.map(normalizeCard);
+      break;
+    }catch(e){ console.warn("Card source unavailable:",url,e.message); }
+  }
+  cardsById=new Map(allCards.map(c=>[c.id,c]));
+  useCardDatabase(cardsById);
+  cards=allCards;
+  render();
+}
+function currentList(){
+  if(activeTab==="legend") return cards.filter(c=>c.isLegend);
+  if(activeTab==="champion") return cards.filter(c=>c.isChampion && !c.isSignature);
+  if(activeTab==="runes") return cards.filter(c=>c.isRune);
+  if(activeTab==="battlefields") return cards.filter(c=>c.isBattlefield);
+  return cards.filter(c=>!c.isLegend&&!c.isRune&&!c.isBattlefield);
+}
+function filtered(){
+  const q=search.toLowerCase().trim();
+  let result=currentList().filter(c=>
+    (filterType==="All"||c.type===filterType)&&
+    (filterSet==="All"||c.setCode===filterSet)&&
+    (filterDomain==="All"||c.domains.includes(filterDomain))&&
+    (showBanned||(!cardIsBanned(c)&&!c.isBattlefield||!bannedBattlefield(c)))&&
+    (!q||cardSearchText(c).includes(q))
+  );
+  return result.sort((a,b)=>sortBy==="set" ? `${a.setCode}${a.name}`.localeCompare(`${b.setCode}${b.name}`) : a.name.localeCompare(b.name)).slice(0,240);
+}
+function bannedBattlefield(c){ return c?.isBattlefield && ["Dreaming Tree","Obelisk of Power","Reaver's Row","Reaver’s Row"].includes(c.name); }
+function saveDeck(){
+  const name=prompt("Deck name:", savedDecks[0]?.name||"My Riftbound Deck");
+  if(!name)return;
+  const clean={...structuredClone(deck), main:deck.main.map(c=>c.id), runes:deck.runes.map(c=>c.id), savedAt:new Date().toISOString()};
+  savedDecks=[{name,...clean},...savedDecks.filter(x=>x.name!==name)];
+  localStorage.setItem("riftbound-decks-v3",JSON.stringify(savedDecks));
+  alert(`Saved "${name}".`);
+}
+function loadSavedDeck(){
+  if(!savedDecks.length){alert("No saved decks yet.");return;}
+  const menu=savedDecks.map((d,i)=>`${i+1}. ${d.name}`).join("\n");
+  const pick=Number(prompt(`Load deck:\n\n${menu}\n\nEnter a number:`))-1;
+  if(!savedDecks[pick])return;
+  const d=savedDecks[pick];
+  deck={legend:d.legend||null,chosenChampion:d.chosenChampion||null,main:(d.main||[]).map(id=>cardsById.get(id)).filter(Boolean),runes:(d.runes||[]).map(id=>cardsById.get(id)).filter(Boolean),battlefields:d.battlefields||[]};
+  render();
+}
+function exportDeck(){
+  const out=["Riftbound Deck",`Legend: ${cardsById.get(deck.legend)?.name||""}`,`Champion: ${cardsById.get(deck.chosenChampion)?.name||""}`,"","Main Deck",...Object.entries(deck.main.reduce((m,c)=>(m[c.name]=(m[c.name]||0)+1,m),{})).map(([n,c])=>`${c} ${n}`),"","Rune Deck",...Object.entries(deck.runes.reduce((m,c)=>(m[c.name]=(m[c.name]||0)+1,m),{})).map(([n,c])=>`${c} ${n}`),"","Battlefields",...deck.battlefields.map(id=>cardsById.get(id)?.name||id)].join("\n");
+  navigator.clipboard?.writeText(out); alert("Deck list copied to clipboard.\n\n"+out);
+}
+function showCard(c){cardModal=c;render();}
+
+function addCard(c){
+  if(activeTab==="legend"){deck.legend=c.id;deck.chosenChampion=null;}
+  else if(activeTab==="champion"){if(cardAllowedAsChampion(c,deck,cardsById))deck.chosenChampion=c.id;}
+  else if(activeTab==="runes"){if(cardAllowedAsRune(c,deck,cardsById)&&deck.runes.length<RUNE_SIZE)deck.runes.push(c);}
+  else if(activeTab==="battlefields"){if(cardAllowedAsBattlefield(c,deck,cardsById)&&deck.battlefields.length<BATTLEFIELD_COUNT)deck.battlefields.push(c.id);}
+  else if(deck.main.length<MAIN_SIZE&&cardAllowedInMain(c,deck,cardsById))deck.main.push(c);
+  render();
+}
+function removeCard(c,tab){
+  if(tab==="main"){const i=deck.main.findIndex(x=>x.id===c.id);if(i>=0)deck.main.splice(i,1);}
+  if(tab==="runes"){const i=deck.runes.findIndex(x=>x.id===c.id);if(i>=0)deck.runes.splice(i,1);}
+  if(tab==="battlefields"){const i=deck.battlefields.indexOf(c.id);if(i>=0)deck.battlefields.splice(i,1);}
+  render();
+}
+function startGame(practice=false){
+  try {
+    const errs=validateDeck(deck,cardsById);
+    if(errs.length){alert(errs.join("\n"));return;}
+    const d2=structuredClone(deck);
+    game=createGame(deck,d2,{practice,p1Name:"You",p2Name:practice?"Practice Opponent":"Player 2"});
+    screen="game";
+    render();
+  } catch (e) { console.error(e); alert(`Unable to start the game.\n\n${e.message}`); }
+}
+function img(c){return c?.imageUrl||"data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="560"><rect width="100%" height="100%" fill="#18233a"/><text x="50%" y="48%" fill="#aab7d5" text-anchor="middle" font-family="sans-serif" font-size="24">${(c?.name||"Card").slice(0,22)}</text><text x="50%" y="54%" fill="#66789e" text-anchor="middle" font-family="sans-serif" font-size="14">Artwork unavailable</text></svg>`);}
+
+function cardTile(c,disabled=false){
+  return `<div class="card-wrap"><button class="card-tile ${disabled?"disabled":""}" data-add="${c.id}" ${disabled?"disabled":""}>
+    <img src="${img(c)}" alt="${c.name}" loading="lazy"><div class="tile-meta"><b>${c.name}</b><span>${c.setCode} · ${c.type||"Card"}</span></div></button><button class="detail-btn" data-detail="${c.id}" title="View details">ⓘ</button></div>`;
+}
+function builder(){
+  const errs=validateDeck(deck,cardsById), list=filtered(), identity=deck.legend?(cardsById.get(deck.legend)?.domains||[]):[];
+  const mainCounts={};deck.main.forEach(c=>mainCounts[c.name]=(mainCounts[c.name]||0)+1);
+  const types=[...new Set(currentList().map(c=>c.type).filter(Boolean))].sort(), domains=[...new Set(allCards.flatMap(c=>c.domains))].sort();
+  const selectedLegend=deck.legend&&cardsById.get(deck.legend), selectedChampion=deck.chosenChampion&&cardsById.get(deck.chosenChampion);
+  return `<header><div><h1>RIFTBOUND</h1><span class="prototype">DIGITAL CARD LAB</span></div><div class="header-nav">
+    <button data-screen="builder">Deck Builder</button><button data-screen="cards">Card Gallery</button><button id="loadDeck">Load</button><button id="saveDeck">Save</button><button id="exportDeck">Export</button>
+  </div><div class="header-right">Constructed · ${allCards.length||0} cards</div></header>
+  <main class="builder-layout">
+    <section class="builder-left">
+      <div class="panel deck-summary">
+        <div><b>Champion Legend</b><span>${selectedLegend?selectedLegend.name:"Not selected"}</span></div>
+        <div><b>Chosen Champion</b><span>${selectedChampion?selectedChampion.name:"Not selected"}</span></div>
+        <div><b>Main Deck</b><span class="${deck.main.length===MAIN_SIZE?"ok":""}">${deck.main.length}/${MAIN_SIZE}</span></div>
+        <div><b>Rune Deck</b><span class="${deck.runes.length===RUNE_SIZE?"ok":""}">${deck.runes.length}/${RUNE_SIZE}</span></div>
+        <div><b>Battlefields</b><span class="${deck.battlefields.length===BATTLEFIELD_COUNT?"ok":""}">${deck.battlefields.length}/${BATTLEFIELD_COUNT}</span></div>
+        <button id="start" ${errs.length?"disabled":""}>Start Game</button><button id="practice" ${errs.length?"disabled":""}>Two-Sided Practice</button>
+      </div>
+      <div class="panel tabs">${["main","legend","champion","runes","battlefields"].map(t=>`<button class="${activeTab===t?"active":""}" data-tab="${t}">${t==="main"?"Main Cards":t[0].toUpperCase()+t.slice(1)}</button>`).join("")}</div>
+      <div class="panel filters">
+        ${activeTab==="battlefields"?'<div class="tab-help">Battlefields are colorless: choose any 3 distinct legal Battlefields. Domain restrictions do not apply.</div>':""}
+        <input id="search" value="${search.replaceAll('"','&quot;')}" placeholder="Search cards...">
+        <select id="setFilter"><option>All</option>${[...new Set(allCards.map(c=>c.setCode))].sort().map(s=>`<option ${filterSet===s?"selected":""}>${s}</option>`).join("")}</select>
+        <select id="typeFilter"><option>All</option>${types.map(t=>`<option ${filterType===t?"selected":""}>${t}</option>`).join("")}</select>
+        <select id="domainFilter"><option>All</option>${domains.map(d=>`<option ${filterDomain===d?"selected":""}>${d}</option>`).join("")}</select>
+        <select id="sortFilter"><option value="name" ${sortBy==="name"?"selected":""}>Sort: Name</option><option value="set" ${sortBy==="set"?"selected":""}>Sort: Set</option></select>
+        <label class="toggle"><input id="showBanned" type="checkbox" ${showBanned?"checked":""}> Show banned</label>
+        <span class="result-count">${filtered().length}+ results</span>
+      </div>
+      <div class="card-grid">${list.map(c=>{
+        let disabled=false;
+        if(activeTab==="main") disabled=deck.main.length>=MAIN_SIZE||!cardAllowedInMain(c,deck,cardsById);
+        if(activeTab==="legend") disabled=!!deck.legend;
+        if(activeTab==="champion") disabled=!cardAllowedAsChampion(c,deck,cardsById);
+        if(activeTab==="runes") disabled=deck.runes.length>=RUNE_SIZE||!cardAllowedAsRune(c,deck,cardsById);
+        if(activeTab==="battlefields") disabled=deck.battlefields.length>=BATTLEFIELD_COUNT||!cardAllowedAsBattlefield(c,deck,cardsById);
+        return cardTile(c,disabled);
+      }).join("")}</div>
+    </section>
+    <aside class="builder-right">
+      <div class="panel"><h2>Deck</h2>
+        <div class="chosen-card">${selectedLegend?cardTile(selectedLegend):"<span>Select a Legend</span>"}</div>
+        <div class="chosen-card">${selectedChampion?cardTile(selectedChampion):"<span>Select a Chosen Champion</span>"}</div>
+        <h3>Main Deck (${deck.main.length}/${MAIN_SIZE})</h3>
+        <div class="deck-list">${Object.entries(mainCounts).map(([name,count])=>`<div><span>${count}× ${name}</span><button data-remove-main="${name}">−</button></div>`).join("")||"<small>No cards yet.</small>"}</div>
+        <h3>Runes (${deck.runes.length}/${RUNE_SIZE})</h3>
+        <div class="deck-list">${[...new Set(deck.runes.map(c=>c.name))].map(name=>{const n=deck.runes.filter(c=>c.name===name).length;return `<div><span>${n}× ${name}</span><button data-remove-rune="${name}">−</button></div>`}).join("")||"<small>No runes yet.</small>"}</div>
+        <h3>Battlefields (${deck.battlefields.length}/${BATTLEFIELD_COUNT})</h3>
+        <div class="deck-list">${deck.battlefields.map(id=>{const c=cardsById.get(id);return `<div><span>${c?.name||id}</span><button data-remove-bf="${id}">−</button></div>`}).join("")||"<small>No battlefields yet.</small>"}</div>
+        <div class="deck-stats"><b>Deck stats</b><span>Unique ${new Set(deck.main.map(c=>c.name)).size}</span><span>Avg cost ${deck.main.length?(deck.main.reduce((s,c)=>s+Number(c.energy||0),0)/deck.main.length).toFixed(1):"0.0"}</span><span>Signatures ${deck.main.filter(c=>c.isSignature).length}/${3}</span></div>
+        <div class="validation ${errs.length?"bad":"good"}">${errs.length?errs.map(e=>`<div>• ${e}</div>`).join(""):"✓ Deck is legal for this Constructed prototype."}</div>
+      </div>
+    </aside>
+  </main>`;
+}
+function gallery(){
+  const types=[...new Set(allCards.map(c=>c.type).filter(Boolean))].sort(), domains=[...new Set(allCards.flatMap(c=>c.domains))].sort();
+  return `<header><div><h1>RIFTBOUND</h1><span class="prototype">CARD GALLERY</span></div><div class="header-nav"><button data-screen="builder">Deck Builder</button></div><div class="header-right">${allCards.length} cards</div></header>
+  <main class="catalog"><div class="panel filters">
+    <input id="search" value="${search.replaceAll('"','&quot;')}" placeholder="Search name, rules text, tag, set...">
+    <select id="setFilter"><option>All</option>${[...new Set(allCards.map(c=>c.setCode))].sort().map(s=>`<option ${filterSet===s?"selected":""}>${s}</option>`).join("")}</select>
+    <select id="typeFilter"><option>All</option>${types.map(t=>`<option ${filterType===t?"selected":""}>${t}</option>`).join("")}</select>
+    <select id="domainFilter"><option>All</option>${domains.map(d=>`<option ${filterDomain===d?"selected":""}>${d}</option>`).join("")}</select>
+    <select id="sortFilter"><option value="name" ${sortBy==="name"?"selected":""}>Name</option><option value="set" ${sortBy==="set"?"selected":""}>Set</option></select>
+    <label class="toggle"><input id="showBanned" type="checkbox" ${showBanned?"checked":""}> Show banned</label>
+  </div><div class="catalog-count">${filtered().length} shown · use ⓘ for card details</div>
+  <div class="card-grid gallery-grid">${filtered().map(c=>cardTile(c,false)).join("")}</div></main>${cardModal?modalHTML():""}`;
+}
+function modalHTML(){
+  const c=cardModal;
+  return `<div class="modal-backdrop" data-close-modal><div class="card-modal" onclick="event.stopPropagation()"><button class="modal-close" data-close-modal>×</button><img src="${c.imageUrl}" alt="${c.name}"><div><h2>${c.name}</h2><p><b>${c.type}</b> · ${c.setCode} · ${c.rarity||"Unknown"}</p><p>${c.domains.join(" · ")||"Colorless"}</p><p class="rules">${c.ability||"No rules text."}</p><p>Might: ${c.might??"—"} · Energy: ${c.energy??"—"} · Power: ${c.power??"—"}</p>${c.isSignature?'<span class="badge">Signature</span>':""}${cardIsBanned(c)||bannedBattlefield(c)?'<span class="badge banned">Banned</span>':""}</div></div></div>`;
+}
+function zoneCards(p,zone){return (p?.[zone]||[]).map(x=>{const c=CARDS[x.cardId];return `<button class="zone-card" data-inspect="${x.uid}" title="Inspect"><img src="${img(c)}"><span>${c?.name||x.cardId}</span></button>`}).join("")||'<span class="empty-zone">Empty</span>';}
+function boardUnit(u){const c=CARDS[u.cardId];const selected=contextTarget?.kind==='unit'&&contextTarget.uid===u.uid;return `<button draggable="true" class="unit ${u.exhausted?'exhausted':''} ${u.empowered?'empowered':''} ${selected?'context-selected':''}" data-unit="${u.uid}" data-context-unit="${u.uid}" data-inspect="${u.uid}"><img src="${img(c)}"><span>${c?.name||u.cardId}</span><b>${c?.might??'—'}</b></button>`;}
+function playerBar(p,label){return `<div class="panel playerbar"><div class="player-title"><b>${label}</b><small>${p.name}</small></div><span>⭐ ${p.points}/8</span><span>⚡ ${p.energy}/${p.maxEnergy}</span><span>Deck ${p.deck.length}</span><span>Hand ${p.hand.length}</span><span>Trash ${p.trash.length}</span><span>Banished ${p.banished.length}</span></div>`;}
+function actionForContext(actions){
+  if(!contextTarget) return actions;
+  if(contextTarget.kind==='card') return actions.filter(a=>a.type==='PLAY'&&a.cardUid===contextTarget.uid);
+  if(contextTarget.kind==='unit') return actions.filter(a=>a.unitUid===contextTarget.uid);
+  return actions;
+}
+function mobileActionBar(actions){
+  const contextual=actionForContext(actions);
+  const primary=contextual.filter(a=>["END_ACTION","END_TURN","DRAW","REVEAL_RUNE"].includes(a.type));
+  return `<div class="mobile-action-bar"><button data-mobile-panel="actions" class="${mobilePanel==='actions'?'active':''}">Actions</button><button data-mobile-panel="zones" class="${mobilePanel==='zones'?'active':''}">Zones</button><button data-mobile-panel="log" class="${mobilePanel==='log'?'active':''}">Log</button>${primary.slice(0,2).map(a=>`<button class="mobile-primary" data-action='${JSON.stringify(a)}'>${a.type==='END_TURN'?'End Turn':a.type==='END_ACTION'?'Pass':a.type==='DRAW'?'Draw':'Rune'}</button>`).join('')}</div>`;
+}
+function mobileDrawer(actions){
+  const contextual=actionForContext(actions);
+  if(mobilePanel==='actions') return `<div class="mobile-drawer"><div class="drawer-title">${contextTarget?'Card / Unit actions':'Available actions'}</div>${contextTarget?`<button class="clear-selection" data-clear-context>Clear selection</button>`:''}<div class="actions">${contextual.map(a=>`<button data-action='${JSON.stringify(a)}'>${a.label}</button>`).join('')||'<div class="empty-action">No contextual actions available.</div>'}</div>${!contextTarget?`<div class="drawer-divider"></div><div class="drawer-title secondary">All actions</div><div class="actions">${actions.map(a=>`<button data-action='${JSON.stringify(a)}'>${a.label}</button>`).join('')}</div>`:''}</div>`;
+  if(mobilePanel==='zones') return `<div class="mobile-drawer"><div class="drawer-title">Table zones</div><div class="mobile-zone-summary"><span>Deck <b>${game.players.find(p=>p.id===game.activePlayer)?.deck.length||0}</b></span><span>Runes <b>${game.players.find(p=>p.id===game.activePlayer)?.runeDeck.length||0}</b></span><span>Trash <b>${game.players.find(p=>p.id===game.activePlayer)?.trash.length||0}</b></span><span>Banished <b>${game.players.find(p=>p.id===game.activePlayer)?.banished.length||0}</b></span></div></div>`;
+  return `<div class="mobile-drawer"><div class="drawer-title">Match timeline</div><div class="mobile-log">${game.log.slice(0,10).map(x=>`<div>${x}</div>`).join('')}</div></div>`;
+}
+function gameUI(){
+  const me=game.players.find(p=>p.id===game.activePlayer)||game.players[0], enemy=game.players.find(p=>p.id!==game.activePlayer)||game.players[1], active=game.players.find(p=>p.id===game.activePlayer), actions=legalActions(game,game.activePlayer);
+  const peek=game.selected?.type?.includes("PEEK");
+  return `<header><div><h1>RIFTBOUND</h1><span class="prototype">ATLAS-STYLE PRACTICE BOARD</span></div><div class="header-nav"><button id="undo" ${game.history?.length?'':'disabled'}>↶ Undo</button><button id="redo" ${game.future?.length?'':'disabled'}>↷ Redo</button><button id="back">Exit</button></div><div class="header-right">Round ${game.round} · Turn ${game.turn} · <b>${active?.name||''}</b> · ${game.phase}</div></header>
+  <div class="context-banner">${contextTarget?`<span>Selected: <b>${contextTarget.kind==='card'?CARDS[game.players[game.activePlayer].hand.find(x=>x.uid===contextTarget.uid)?.cardId]?.name||'Card':CARDS[game.battlefields.flatMap(b=>b.units).find(u=>u.uid===contextTarget.uid)?.cardId]?.name||'Unit'}</b></span><button data-clear-context>Clear</button>`:`<span>Tap a card or unit for contextual actions. Drag still works for quick placement/movement.</span>`}</div><main class="sim-layout">
+    <section class="sim-main">
+      ${playerBar(enemy,"OPPONENT")}
+      <div class="opponent-zones"><div class="zone compact"><b>Hand</b><span>${enemy.hand.length} cards</span></div><div class="zone compact" data-zone="p2-trash"><b>Trash</b><span>${enemy.trash.length}</span></div><div class="zone compact" data-zone="p2-banish"><b>Banished</b><span>${enemy.banished.length}</span></div><div class="zone compact"><b>Rune Deck</b><span>${enemy.runeDeck.length}</span></div></div>
+      <div class="board ${game.selected?.type==='PLACEMENT'?'placement':''}">${game.battlefields.map(b=>`<div class="battlefield" data-bf="${b.id}" data-drop-bf="${b.id}"><div class="bf-head"><div><b>${cardsById.get(b.cardId)?.name||b.cardId}</b><small>${b.units.filter(u=>u.owner==='p1').length} you · ${b.units.filter(u=>u.owner==='p2').length} opp</small></div><span>DROP ZONE</span></div><div class="units">${b.units.map(boardUnit).join('')||'<small class="empty-zone">Drop cards here</small>'}</div></div>`).join('')}</div>
+      <div class="zone-row"><div class="zone" data-zone="p1-deck"><b>DECK</b><span>${me.deck.length}</span><button data-action='${JSON.stringify({type:'DRAW'})}'>Draw</button><button data-action='${JSON.stringify({type:'LOOK_DECK'})}'>Peek</button></div><div class="zone"><b>RUNE DECK</b><span>${me.runeDeck.length}</span><button data-action='${JSON.stringify({type:'REVEAL_RUNE'})}'>Reveal</button><button data-action='${JSON.stringify({type:'LOOK_RUNE'})}'>Peek</button><button data-action='${JSON.stringify({type:'BOTTOM_RUNE'})}'>Bottom</button></div><div class="zone drop-zone" data-drop-zone="trash"><b>TRASH</b><span>${me.trash.length}</span><div class="zone-cards">${zoneCards(me,'trash')}</div></div><div class="zone drop-zone" data-drop-zone="banished"><b>BANISHED</b><span>${me.banished.length}</span><div class="zone-cards">${zoneCards(me,'banished')}</div></div></div>
+      <div class="panel rune-strip"><b>Your revealed Runes</b><div class="rune-cards">${zoneCards(me,'runeZone')}</div></div>
+      ${playerBar(me,"YOU")}
+      <div class="panel hand" data-hand="${me.id}">${me.hand.map(x=>{const c=CARDS[x.cardId];const playable=actions.some(a=>a.type==='PLAY'&&a.cardUid===x.uid);return `<button draggable="true" class="hand-card ${playable?'playable':''} ${contextTarget?.kind==='card'&&contextTarget.uid===x.uid?'context-selected':''}" data-card="${x.uid}" data-context-card="${x.uid}" data-play="${x.uid}"><img src="${img(c)}"><span>${c?.name||x.cardId}</span><small>${c?.energy??c?.cost??'—'} ⚡</small></button>`}).join('')||'<span class="empty-zone">Your hand is empty.</span>'}</div>
+      <div class="panel sim-controls"><div><b>Priority:</b> ${game.priority===game.activePlayer?'You':'Opponent'} · <b>Mode:</b> ${game.practice?'Two-Sided Practice':'Solo'}</div><div class="actions">${actions.map(a=>`<button data-action='${JSON.stringify(a)}'>${a.label}</button>`).join('')}</div></div>
+      ${mobileDrawer(actions)}
+      ${mobileActionBar(actions)}
+    </section>
+    <aside class="sim-sidebar"><div class="panel guide"><h2>Practice Controls</h2><p>Drag cards onto Battlefields or zones. Right-click a card to inspect it. Use Undo/Redo to step through the local action history.</p><button id="switchSeat">Switch Active Seat</button><button id="resetGame">Reset Practice</button></div><div class="panel chain"><h2>Chain</h2>${game.chain.length?game.chain.map(x=>`<div>${x}</div>`).join(''):'<span class="empty-zone">Nothing resolving.</span>'}</div><div class="panel log"><h2>Match Timeline</h2>${game.log.slice(0,14).map(x=>`<div>${x}</div>`).join('')}</div></aside>
+  </main>${peek?`<div class="peek-overlay"><div class="peek-card"><button id="closePeek">×</button><h2>${game.selected.type==='DECK_PEEK'?'Deck Peek':'Rune Peek'}</h2><p>Private inspection for ${game.players.find(p=>p.id===game.selected.playerId)?.name||'player'}.</p>${game.selected.cardId?`<img src="${img(CARDS[game.selected.cardId])}"><h3>${CARDS[game.selected.cardId]?.name||''}</h3>`:`<p>Top card: ${CARDS[game.players.find(p=>p.id===game.selected.playerId)?.deck[0]?.cardId]?.name||'Hidden'}</p>`}</div></div>`:''}${game.winner?`<div class="win-banner">🏆 ${game.players.find(p=>p.id===game.winner)?.name} wins!</div>`:''}`;
+}
+
+function render(){
+  document.querySelector("#app").innerHTML=screen==="builder"?builder():screen==="cards"?gallery():gameUI();
+  bind();
+}
+function bind(){
+  document.querySelectorAll("[data-screen]").forEach(b=>b.onclick=()=>{screen=b.dataset.screen;cardModal=null;render();});
+  document.querySelectorAll("[data-detail]").forEach(b=>b.onclick=e=>{e.stopPropagation();showCard(cardsById.get(b.dataset.detail));});
+  document.querySelectorAll("[data-close-modal]").forEach(b=>b.onclick=()=>{cardModal=null;render();});
+  const sort=document.querySelector("#sortFilter");if(sort)sort.onchange=e=>{sortBy=e.target.value;render();};
+  const banned=document.querySelector("#showBanned");if(banned)banned.onchange=e=>{showBanned=e.target.checked;render();};
+  const save=document.querySelector("#saveDeck");if(save)save.onclick=saveDeck; const load=document.querySelector("#loadDeck");if(load)load.onclick=loadSavedDeck; const exp=document.querySelector("#exportDeck");if(exp)exp.onclick=exportDeck;
+  document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;search="";render();});
+  const s=document.querySelector("#search");if(s)s.oninput=e=>{search=e.target.value;render();}; const sf=document.querySelector("#setFilter");if(sf)sf.onchange=e=>{filterSet=e.target.value;render();}; const tf=document.querySelector("#typeFilter");if(tf)tf.onchange=e=>{filterType=e.target.value;render();}; const df=document.querySelector("#domainFilter");if(df)df.onchange=e=>{filterDomain=e.target.value;render();};
+  document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>addCard(cardsById.get(b.dataset.add)));
+  document.querySelectorAll("[data-remove-main]").forEach(b=>b.onclick=()=>{const i=deck.main.findIndex(c=>c.name===b.dataset.removeMain);if(i>=0)deck.main.splice(i,1);render();});
+  document.querySelectorAll("[data-remove-rune]").forEach(b=>b.onclick=()=>{const i=deck.runes.findIndex(c=>c.name===b.dataset.removeRune);if(i>=0)deck.runes.splice(i,1);render();});
+  document.querySelectorAll("[data-remove-bf]").forEach(b=>b.onclick=()=>{deck.battlefields=deck.battlefields.filter(id=>id!==b.dataset.removeBf);render();});
+  const start=document.querySelector("#start");if(start)start.onclick=()=>startGame(false); const practice=document.querySelector("#practice");if(practice)practice.onclick=()=>startGame(true);
+  document.querySelectorAll("[data-action]").forEach(b=>b.onclick=()=>{try{game=perform(game,JSON.parse(b.dataset.action));contextTarget=null;render();}catch(e){alert(e.message);}});
+  document.querySelectorAll("[data-context-card]").forEach(b=>b.onclick=e=>{e.stopPropagation();contextTarget={kind:"card",uid:b.dataset.contextCard};mobilePanel="actions";render();});
+  document.querySelectorAll("[data-context-unit]").forEach(b=>b.onclick=e=>{e.stopPropagation();contextTarget={kind:"unit",uid:b.dataset.contextUnit};mobilePanel="actions";render();});
+  document.querySelectorAll("[data-clear-context]").forEach(b=>b.onclick=()=>{contextTarget=null;render();});
+  document.querySelectorAll("[data-play]").forEach(b=>b.ondblclick=()=>{try{game=perform(game,{type:"PLAY",cardUid:b.dataset.play,owner:game.practice?game.activePlayer:'p1'});render();}catch(e){alert(e.message);}});
+  document.querySelectorAll("[data-bf]").forEach(b=>b.onclick=()=>{if(game.selected?.type==="PLACEMENT"){try{game=placeUnit(game,b.dataset.bf);contextTarget=null;render();}catch(e){alert(e.message);}}});
+  document.querySelectorAll("[data-inspect]").forEach(b=>{
+    const inspect=()=>{const uid=b.dataset.inspect;const all=[...game.players.flatMap(p=>[...p.hand,...p.trash,...p.banished,...p.runeZone]),...game.battlefields.flatMap(x=>x.units)];const inst=all.find(x=>x.uid===uid);if(inst)showCard(CARDS[inst.cardId]);};
+    b.oncontextmenu=e=>{e.preventDefault();inspect();};
+    b.onclick=e=>{if(e.detail===1) setTimeout(()=>{if(!e.defaultPrevented) inspect();},120);};
+  });
+  document.querySelectorAll("[draggable=true]").forEach(el=>{el.ondragstart=e=>e.dataTransfer.setData('text/plain',el.dataset.card||el.dataset.unit||'');});
+  document.querySelectorAll("[data-drop-bf]").forEach(el=>{el.ondragover=e=>e.preventDefault();el.ondrop=e=>{e.preventDefault();const id=e.dataTransfer.getData('text/plain');const hand=game.players[game.activePlayer].hand.find(c=>c.uid===id);if(hand){try{game=perform(game,{type:'PLAY',cardUid:id,owner:game.activePlayer});game=placeUnit(game,el.dataset.dropBf);render();}catch(err){alert(err.message);}}else {try{game=perform(game,{type:'MOVE',unitUid:id,to:el.dataset.dropBf,owner:game.activePlayer});render();}catch(err){alert(err.message);}}};});
+  document.querySelectorAll('[data-drop-zone]').forEach(el=>{el.ondragover=e=>e.preventDefault();el.ondrop=e=>{e.preventDefault();const id=e.dataTransfer.getData('text/plain');try{game=perform(game,{type:el.dataset.dropZone==='trash'?'TRASH':'BANISH',unitUid:id,owner:game.activePlayer});render();}catch(err){alert(err.message);}};});
+  const undo=document.querySelector('#undo');if(undo)undo.onclick=()=>{game=perform(game,{type:'UNDO'});render();}; const redo=document.querySelector('#redo');if(redo)redo.onclick=()=>{game=perform(game,{type:'REDO'});render();};
+  const closePeek=document.querySelector('#closePeek');if(closePeek)closePeek.onclick=()=>{game={...game,selected:null};render();};
+  const switchSeat=document.querySelector('#switchSeat');if(switchSeat)switchSeat.onclick=()=>{game={...game,activePlayer:game.activePlayer==='p1'?'p2':'p1',priority:game.activePlayer==='p1'?'p2':'p1'};render();};
+  const reset=document.querySelector('#resetGame');if(reset)reset.onclick=()=>{if(confirm('Reset the current practice game?'))startGame(game?.practice);};
+  document.querySelectorAll('[data-mobile-panel]').forEach(b=>b.onclick=()=>{mobilePanel=b.dataset.mobilePanel;render();});
+  const back=document.querySelector('#back');if(back)back.onclick=()=>{screen="builder";game=null;contextTarget=null;render();};
+}
+
+window.addEventListener("error",e=>console.error(e));
+loadCards();
+
+</script>
+</body>
+</html>
